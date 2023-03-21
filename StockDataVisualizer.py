@@ -1,6 +1,6 @@
 # import functions for the Stock Data Visualizer
 from StockFunctions import *
-
+from StockTime import *
 def main():
     print("Stock Data Visualizer\n------------------------\n")
     
