@@ -15,7 +15,7 @@ def get_time_series_option():
         if time_series_option not in ["1", "2", "3", "4"]:
             print("Invalid option. Please enter either 1, 2, 3, or 4.")
         else:
-            return time_series_option
+            return int(time_series_option)
 
 # This function asks the user for the start date and returns the user's input.
 
@@ -37,3 +37,8 @@ def get_end_date(start_date):
             print("Invalid date input:", e)
             continue
         return end_date
+
+def get_start_time():
+    start_time = input("Enter a time (HH:MM:SS): ")
+    return start_time
+    
