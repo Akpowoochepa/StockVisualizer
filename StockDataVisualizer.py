@@ -1,6 +1,7 @@
 # import functions for the Stock Data Visualizer
 from StockFunctions import *
-from StockTime import *
+from StockVisualizer.StockVisualizer.StockTime import *
+
 def main():
     print("Stock Data Visualizer\n------------------------\n")
     
@@ -41,7 +42,12 @@ def main():
 end_date, chart_type)
 
 
-
+# def visualization():
+#     line_chart = pygal.Line()
+#     line_chart.title = 'Browser usage evolution (in %)'
+#     line_chart.x_labels = map(str, range(2002, 2013))
+#     line_chart.add('Firefox', [None, None,    0, 16.6,   25,   31, 36.4, 45.5, 46.3, 42.8, 37.1])
+#     line_chart.render()
 
 main()
 
