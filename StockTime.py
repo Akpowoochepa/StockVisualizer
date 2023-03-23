@@ -2,8 +2,8 @@ import requests
 import pandas as pd
 from alpha_vantage.timeseries import TimeSeries
 
-# This function asks the user for the time series option and returns the 
-user's input.
+# This function asks the user for the time series option and returns the user's input.
+
 def get_time_series_option():
     while True:
         print("Enter the time series option:")
@@ -17,15 +17,14 @@ def get_time_series_option():
         else:
             return time_series_option
 
-# This function asks the user for the start date and returns the user's 
-input.
+# This function asks the user for the start date and returns the user's input.
+
 def get_start_date():
     start_date = input("Enter the start date (YYYY-MM-DD): ")
     return start_date
 
-# This function asks the user for the end date and validates that the end 
-date is not before the start date. It returns the user's input if it is 
-valid.
+# This function asks the user for the end date and validates that the end date is not before the start date. It returns the user's input if it is valid.
+
 def get_end_date(start_date):
     while True:
         end_date = input("Enter the end date (YYYY-MM-DD): ")
