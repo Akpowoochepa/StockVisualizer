@@ -18,8 +18,7 @@ def main():
     # If time series option is Intraday, get the interval from the user
     if time_series_option == "1":
         time_series = "TIME_SERIES_INTRADAY"
-        interval = input("Enter the interval (1min, 5min, 15min, 30min, 
-60min): ")
+        interval = input("Enter the interval (1min, 5min, 15min, 30min, 60min): ")
     else:
         interval = None
         
