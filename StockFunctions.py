@@ -7,3 +7,6 @@ def get_stock_symbol():
 def get_chart_type():
     chart_type = input("Enter the chart type you want (1,2): ")
     return 
+
+
+
