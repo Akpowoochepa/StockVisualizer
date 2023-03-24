@@ -12,27 +12,27 @@ from datetime import datetime
 #symbol is a string for the stock symbol we are looking for
 #lowerDateStr is the string for the start date
 #upperDateStr is the string for end date
-def pingAPI(func, symbol, lowerDateStr, upperDateStr):
+def pingAPI(func, symbol, lowerDate, upperDate):
 #MUQCQXXUYY3U4KUE -> my API key
     #the if statement will pick a URL based on what the func is. The only thing changing in each URL is the "function" parameter
     if(func == 1):
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=30min&apikey=MUQCQXXUYY3U4KUE&datatype=csv".format(symbol)
         #This is how you change the date strings into a date time object
         #FUNCTION 1 NEEDS A TIME TO WORK THE OTHERS CANNOT HAVE A TIME
-        lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d %H:%M:%S") 
-        upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d %H:%M:%S")
+        # lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d %H:%M:%S") 
+        # upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d %H:%M:%S")
     elif(func == 2):
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={}&apikey=MUQCQXXUYY3U4KUE&datatype=csv".format(symbol)
-        lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d")
-        upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d")
+        # lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d")
+        # upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d")
     elif(func == 3):
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol={}&apikey=MUQCQXXUYY3U4KUE&datatype=csv".format(symbol)
-        lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d")
-        upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d")
+        # lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d")
+        # upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d")
     elif(func == 4):
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={}&apikey=MUQCQXXUYY3U4KUE&datatype=csv".format(symbol)
-        lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d")
-        upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d")
+        # lowerDate = datetime.strptime(lowerDateStr, "%Y-%m-%d")
+        # upperDate = datetime.strptime(upperDateStr, "%Y-%m-%d")
 
 
     #getting the info form the API and turns into a CSV file
@@ -60,9 +60,11 @@ def pingAPI(func, symbol, lowerDateStr, upperDateStr):
 
 #ignore this, just used for my own testing
 # def main():
-#     string1 = "2022-01-01"
-#     string2 = "2022-12-31"
-#     results = pingAPI(2, "IBM", string1, string2)
+#     string1 = "2023-03-17 12:00:00"
+#     string2 = "2023-03-22 12:00:00"
+#     date1 = datetime.strptime(string1, "%Y-%m-%d %H:%M:%S")
+#     date2 = datetime.strptime(string2, "%Y-%m-%d %H:%M:%S")
+#     results = pingAPI(1, "IBM", date1, date2)
 
 #     for result in results:
 #         print(result)

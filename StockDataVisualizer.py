@@ -36,14 +36,18 @@ def main():
     # Call the function to get the start date from the user
     start_date = get_start_date()
     if(start_time != None):
-        start_date += " " + start_time
+        start_date = datetime.combine(start_date, start_time)
 
     # Call the function to get the end date from the user
     end_date = get_end_date(start_date)
     if(start_time != None):
-        end_date += " " + start_time
+        end_date = datetime.combine(end_date, start_time)
 
     data = pingAPI(time_series_option, stock_symbol, start_date, end_date)
+
+    #just here to make sure the data is 
+    for thing in data:
+        print(thing)
 
     # Call the function to plot the stock data
 #     plot_stock_data(stock_symbol, time_series, interval, start_date, 
