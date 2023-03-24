@@ -1,22 +1,20 @@
-# import functions for the Stock Data Visualizer
+import requests
+import pygal
+from lxml import etree, html
 from StockFunctions import *
 from StockTime import *
-import requests
-from lxml import etree
-import pygal
-import webbrowser
 
 def main():
     print("Stock Data Visualizer\n------------------------\n")
-    
+
     # function to get the stock symbol from user
-    stock_symbol = get_stock_symbol() 
-    
+    stock_symbol = get_stock_symbol()
+
     print("\n\nChart Types\n--------------\n1. Bar\n2. Line\n")
-    
+
     # function to get chart type from user
-    chart_type = get_chart_type() 
-    
+    chart_type = get_chart_type()
+
     # Call the function to get the time series option from the user
     time_series_option = get_time_series_option()
 
@@ -26,7 +24,7 @@ def main():
         interval = input("Enter the interval (1min, 5min, 15min, 30min, 60min): ")
     else:
         interval = None
-        
+
         # Determine the time series based on user's input
         if time_series_option == "2":
             time_series = "TIME_SERIES_DAILY"
@@ -43,15 +41,12 @@ def main():
 
 
 
-
-# Get stock data from API
+    # STOCK VISUALIZATION
+    # Get stock data from API
     api_key = 'AFWROUKTO2W1ZDY'
-    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={stock_symbol}&interval=5min&apikey=demo={api_key}'
-    
-    params = {'symbol': stock_symbol, 'start_date': start_date, 'end_date': end_date}
-    r = requests.get(url)
-    data = r.json()
+    url = f'https://www.alphavantage.co/query?function={time_series}&symbol={stock_symbol}&interval={interval}&apikey={api_key}'
     response = requests.get(url)
+    data = response.json()
 
     # Extract data for line chart
     line_dates = []
@@ -60,7 +55,7 @@ def main():
     line_high_prices = []
     line_low_prices = []
     line_close_prices = []
-    for date, prices in data['Time Series (5min)'].items():
+    for date, prices in data[f'Time Series ({interval or "daily"})'].items():
         line_dates.append(date)
         line_prices.append(float(prices['4. close']))
         line_open_prices.append(float(prices['1. open']))
@@ -71,7 +66,7 @@ def main():
     # Extract data for bar chart
     bar_dates = []
     bar_volumes = []
-    for date, volumes in data['Time Series (5min)'].items():
+    for date, volumes in data[f'Time Series ({interval or "daily"})'].items():
         bar_dates.append(date)
         bar_volumes.append(int(volumes['5. volume']))
 
@@ -95,36 +90,34 @@ def main():
     line_chart.render_to_file('line_chart.svg')
     bar_chart.render_to_file('bar_chart.svg')
 
-    # Generate HTML page with embedded charts
-    html = etree.Element('html')
-    head = etree.SubElement(html, 'head')
+# Generate HTML page with embedded charts
+    html_element = etree.Element('html')
+    head = etree.SubElement(html_element, 'head')
     title = etree.SubElement(head, 'title')
     title.text = 'Stock Charts'
-    body = etree.SubElement(html, 'body')
+    body = etree.SubElement(html_element, 'body')
 
-
-    if chart_type == 1:
+    if chart_type == '1':
         with open('bar_chart.svg', 'r') as f:
             bar_svg_data = f.read()
-        bar_svg = etree.fromstring(bar_svg_data)
+        bar_svg = etree.fromstring(bar_svg_data.encode())
         body.append(bar_svg)
-        webbrowser.open('stock_charts.html')
 
-        
-    if chart_type == 2:
-            with open('line_chart.svg', 'r') as f:
-                line_svg_data = f.read()
-            line_svg = etree.fromstring(line_svg_data)
-            body.append(line_svg)
-           # webbrowser.open('stock_charts.html')
+    elif chart_type == '2':
+        with open('line_chart.svg', 'r') as f:
+            line_svg_data = f.read()
+        line_svg = etree.fromstring(line_svg_data.encode())
+        body.append(line_svg)
 
-
+    else:
+        # Throw error
+        print("Invalid chart type selected.")
 
     # Output HTML
-    print(etree.tostring(html, pretty_print=True, encoding='unicode'))
-    #print(data)
+    with open('stock_charts.html', 'wb') as f:
+        f.write(html.tostring(html_element, pretty_print=True))
 
-
+    # Open HTML file in browser
+    html.open_in_browser(html_element)
 
 main()
-
