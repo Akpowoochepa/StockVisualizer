@@ -18,8 +18,14 @@ def get_time_series_option():
 
 # This function asks the user for the start date and returns the user's input.
 def get_start_date():
-    start_date = input("Enter the start date (YYYY-MM-DD): ")
-    return start_date
+    while True:
+        start_date_str = input("Enter the start date (YYYY-MM-DD): ")
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            return start_date
+        except:
+            print("Error: incorrect input. Please enter input as (YYYY-MM-DD)")
+
 
 # This function asks the user for the end date and validates that the end date is not before the start date. It returns the user's input if it is valid.
 def get_end_date(start_date):
@@ -34,3 +40,13 @@ def get_end_date(start_date):
             print("Invalid date input:", e)
             continue
         return end_date
+    
+#Function to get start time
+    def get_start_time():
+    while True:
+        start_time_str = input("Enter a time (HH:MM:SS): ")
+        try:
+            start_time = datetime.strptime(start_time_str, "%H:%M:%S").time()
+            return start_time
+        except:
+            print("Error: incorrect input. Please enter input as (H:M:S)")
