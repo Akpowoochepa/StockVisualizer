@@ -20,8 +20,14 @@ def get_time_series_option():
 # This function asks the user for the start date and returns the user's input.
 
 def get_start_date():
-    start_date = input("Enter the start date (YYYY-MM-DD): ")
-    return start_date
+    x = True
+    while x is True:
+        start_date = input("Enter the start date (YYYY-MM-DD): ")
+        if start_date == "":
+            print('Please enter a start date (YYYY-MM-DD):')
+            x = True
+        else:
+            return start_date
 
 # This function asks the user for the end date and validates that the end date is not before the start date. It returns the user's input if it is valid.
 

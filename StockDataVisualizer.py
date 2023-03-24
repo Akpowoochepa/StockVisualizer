@@ -41,4 +41,3 @@ def main():
 end_date, chart_type)
 
 main()
-
