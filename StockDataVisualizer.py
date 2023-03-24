@@ -2,6 +2,7 @@
 from StockFunctions import *
 from StockTime import *
 from ping import *
+import pygal
 def main():
     start_time = None
     print("Stock Data Visualizer\n------------------------\n")
@@ -45,13 +46,40 @@ def main():
 
     data = pingAPI(time_series_option, stock_symbol, start_date, end_date)
 
+    dates = []
+    openData = []
+    highData = []
+    lowData = []
+    closeData = []
+    volumeData = []
+
     #just here to make sure the data is 
-    for thing in data:
-        print(thing)
+    for row in data:
+        if(row[0] == "timestamp"):
+            continue
+        dates.append(row[0])
+        openData.append(float(row[1]))
+        highData.append(float(row[2]))
+        lowData.append(float(row[3]))
+        closeData.append(float(row[4]))
+        volumeData.append(int(row[5]))
+
+    line_chart = pygal.Line(x_label_rotation=45)
+    start_date_str = start_date.strftime("%Y-%m-%d")
+    end_date_str = end_date.strftime("%Y-%m-%d")
+    line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + start_date_str + ' to ' + end_date_str
+    line_chart.x_labels = dates
+    line_chart.add('Open', openData)
+    line_chart.add('High', highData)
+    line_chart.add('Low',  lowData)
+    line_chart.add('Close', closeData)
+    line_chart.render_in_browser()
 
     # Call the function to plot the stock data
 #     plot_stock_data(stock_symbol, time_series, interval, start_date, 
 # end_date, chart_type)
 
 main()
+
+
 
