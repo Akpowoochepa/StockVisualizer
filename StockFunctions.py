@@ -2,8 +2,14 @@
 
 #function to get stock symbol from user as user input
 def get_stock_symbol():
-    stock_symbol = input("Enter the stock symbol you are looking for: ")
-    return stock_symbol
+    x = True
+    while x is True:
+        stock_symbol = input("Enter the stock symbol you are looking for: ")
+        if stock_symbol == "":
+            print('Please enter a stock symbol')
+            x = True
+        else:
+            return stock_symbol
 
 #function to get chart type from user as user input
 def get_chart_type():
@@ -15,7 +21,7 @@ def get_chart_type():
         except ValueError:
             print('Please enter an integer')
             i = True
-        if chart_type <= 0 or chart_type > 2:
+        if chart_type <= 0 or chart_type > 2 or chart_type == "":
             print("Please choose option 1 or 2")
             i = True
         
